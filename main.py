@@ -54,7 +54,7 @@ def load_csv_transactions(file_path):
     
 #Save new imput grocery products to the CSV file.
 
-def save_groceries_csv(file_path, groceries):
+def save_groceries(file_path, groceries):
 
     with open(file_path, mode='w', newline='') as csvfile:
          storeCsv = csv.writer(csvfile)
@@ -67,11 +67,54 @@ def save_groceries_csv(file_path, groceries):
 
 #Save sales transactions to the CSV file.
 
-def save_transactions_csv(file_path, transactions):
+def save_transactions(file_path, transactions):
     with open(file_path, mode='w', newline='') as csvfile:
-        
+
         storeCsv = csv.writer(csvfile)
         storeCsv.writerow(['date_time', 'grocery_id', 'quantity', 'payment']) 
         for transaction in transactions:
             storeCsv.writerow([transaction['date_time'], transaction['grocery_id'], transaction['quantity'], transaction['payment']])
+
+
+
+
+"""
+Load users from the CSV file into a dictionary
+
+Returns:
+A dictionary of users indexed by their username
+
+"""
+
+def load_csv_users(file_path):
+    with open(file_path, mode='r') as file:
+        storeCsv = csv.DictReader(file)
+        for row in storeCsv:
+            users[row['username']] = {
+                'password': row['password'],
+                'type': row['type']
+                }
+
+    return users
+
+
+"""
+Authenticate user by username and password.
+
+Returns:
+str: The type of the user ('cashier' or 'manager') if authenticated, None otherwise.
+
+"""
+
+def authenticate_scv_user(users): 
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+    user = users.get(username)
+
+     if user and user['password'] == password:
+        return user['type']
+     else:
+        print("Invalid credentials!")
+        return None
+
 
