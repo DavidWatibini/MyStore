@@ -106,7 +106,7 @@ def enter_sales_transaction(groceries, transactions):
 
 
 
-# Managers to add and edit inventory a 
+# Managers to add new inventory a 
 def add_new_grocery(groceries):
     new_id = f"{len(groceries) + 1}"
     name = input("Enter the grocery name: ")
@@ -120,31 +120,6 @@ def add_new_grocery(groceries):
     }
 
     print("New grocery added.")
-
-
-def edit_grocery(groceries):
-    print("\nAvailable Groceries:")
-    for id, g_details in groceries.items():
-        print(f"ID: {id}, Name: {g_details['name']}, Price: {g_details['price']}, Stock: {g_details['stock']}")
-    
-    grocery_id = input("\nEnter the grocery ID to edit: ")
-
-    if grocery_id in groceries:
-        name = input("Enter the new grocery name (leave blank to keep current): ")
-        price = input("Enter the new price (leave blank to keep current): ")
-        stock = input("Enter the new stock level (leave blank to keep current): ")
-
-        if name:
-            groceries[grocery_id]['name'] = name
-        if price:
-            groceries[grocery_id]['price'] = float(price)
-        if stock:
-            groceries[grocery_id]['stock'] = int(stock)
-
-        print(f"Grocery {grocery_id} updated successfully.")
-    else:
-        print("Grocery ID not found.")
-
 
 
 def main(transaction_file, grocery_file):
@@ -161,8 +136,7 @@ def main(transaction_file, grocery_file):
         print("1. Enter a sales transaction")
         if user_type == 'manager':
             print("2. Add a new grocery product")
-            print("3. Edit existing grocery product")
-        print("4. Logout")
+        print("3. Logout")
 
         choice = input("\nSelect an option: ")
 
@@ -170,9 +144,7 @@ def main(transaction_file, grocery_file):
             enter_sales_transaction(groceries, transactions)
         elif choice == '2' and user_type == 'manager':
             add_new_grocery(groceries)
-        elif choice == '3' and user_type == 'manager':
-            edit_grocery(groceries)
-        elif choice == '4':
+        elif choice == '3':
             save_transactions(transaction_file, transactions)
             save_groceries(grocery_file, groceries)
             print("Data saved. Logging out...")
